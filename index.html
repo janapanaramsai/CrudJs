@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.js"
+  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+  crossorigin="anonymous"></script>
+
+
+
+
+
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body ng-app="myApp" ng-controller="myController">
+    <div class="container">
+      <hr>
+      <button type="button" class="btn btn-lg pull-right btn-info" data-toggle="modal" data-target="#addUserModal">Add Person</button>
+      <h1>List of Persons</h1>
+      <span class="clearfix"></span>
+      <hr>
+
+      <div class="alert alert-info" ng-if="message">
+        <a href="#" class="close" aria-label="close" ng-click="clearMessage()" >&times;</a>
+        <strong>{{message}}</strong>
+      </div>
+
+      <table class = "table table-bordered">
+       <caption>Bordered Table Layout</caption>
+       
+       <thead>
+          <tr>
+             <th>Firstname</th>
+             <th>Lastname</th>
+             <th>Date of Birth</th>
+             <th>zipcode</th>
+          </tr>
+       </thead>
+       
+       <tbody>
+          <tr ng-repeat="user in users">
+             <td>{{user.Firstname}}</td>
+             <td>{{user.Lastname}}</td>
+             <td>{{user.DOB}}</td>
+             <td>{{user.zipcode}}</td>
+             <td><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editUserModal" ng-click="selectUser(user)">Edit</button></td>
+             <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteUserModal" ng-click="deleteUser(user)">Delete</button></td>
+          </tr>
+       </tbody>
+      
+    </table>
+    <!-- Trigger the modal with a button -->
+
+      <!--Adding User Modal -->
+      <div id="addUserModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">New Person</h4>
+            </div>
+            <div class="modal-body">
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label class="control-label col-sm-2" >Firstname</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" ng-model="newUser.Firstname" placeholder="Firstname">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-2" >Lastname</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" ng-model="newUser.Lastname" placeholder="Lastname">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-2" >Date of Birth</label>
+                  <div class="col-sm-10">
+                    <input type="date" class="form-control" id="DOB" ng-model="newUser.DOB" placeholder="Date of Birth">
+                  </div>
+                </div>
+
+                <div class="form-group date">
+                  <label class="control-label col-sm-2" >zipcode</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" ng-model="newUser.zipcode" placeholder="zipcode">
+                  </div>
+                </div>
+                
+                <div class="form-group"> 
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default" data-dismiss="modal" ng-click="addPerson()">Submit</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <!--Adding User Modal -->
+      <div id="editUserModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">edit Person details</h4>
+            </div>
+            <div class="modal-body">
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label class="control-label col-sm-2" >Firstname</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="Firstname" ng-model ="clickedUser.Firstname" placeholder="Firstname">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-2" >Lastname</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="Lastname" 
+                    ng-model ="clickedUser.Lastname" placeholder="Lastname">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label col-sm-2" >Date of Birth</label>
+                  <div class="col-sm-10">
+                    <input type="date" class="form-control" id="DOB" ng-model ="clickedUser.DOB" placeholder="Date of Birth">
+                  </div>
+                </div>
+
+                <div class="form-group date">
+                  <label class="control-label col-sm-2" >zipcode</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="zipcode" ng-model ="clickedUser.zipcode" placeholder="zipcode">
+                  </div>
+                </div>
+                
+                <div class="form-group"> 
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default" ng-click="updateUser()" data-dismiss="modal">Submit</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="deleteUserModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Delete person ?</h4>
+            </div>
+              <div class="modal-body">
+                <strong style="color: red;">
+                  Delete this person - {{clickedUser.Firstname}} ?
+                </strong>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="deleteUser()" >Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+              </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+      function myFunction() {
+          var x = document.getElementById("DOB").value;
+      }
+    </script>
+    
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+  </body>
+</html>
